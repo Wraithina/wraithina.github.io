@@ -1,11 +1,59 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Ethan's Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+    <title>Graphical Works</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    <h1>Hi</h1>
-    <p>Does this work?</p>
+
+    <header class="header">
+        <h1 class="main_title">GRAPHICAL WORKS</h1>
+        <h2 class="sub_title">Wraithina's work</h2>
+    </header>
+
+    <main class="main">
+
+        <template id="project-template">
+            <div class="image_template template_container">
+
+                <div class="auto">
+                    <h1 class="title_element"></h1>
+                    <h2 class="description_element"></h2>
+                </div>
+
+                <div class="media_container"></div>
+
+            </div>
+        </template>
+
+        <div class="about_container">
+            <div class="about_container_content">
+
+                <div class="logo_container">
+                    <a href="https://www.roblox.com/users/881337502/profile">
+                        <img class="logo" src="Assets/roblox_logo.svg" alt="Roblox">
+                    </a>
+                </div>
+
+                <div class="logo_container">
+                    <a href="https://discord.com/users/790607910937165865">
+                        <img class="logo" src="Assets/discord_logo.svg" alt="Discord">
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="projects"></div>
+
+    </main>
+
+    <script src="script.js"></script>
+
 </body>
 </html>

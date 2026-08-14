@@ -1,0 +1,248 @@
+* {
+    box-sizing: border-box;
+    font-family: "Inter", sans-serif;
+    color: #212A38;
+    margin: 0;
+}
+
+
+/* =========================
+   HEADER
+   ========================= */
+
+.header {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    height: auto;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 10px;
+    gap: 2px;
+
+    overflow: hidden;
+}
+
+.main_title {
+    width: fit-content;
+    height: fit-content;
+
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.sub_title {
+    width: fit-content;
+    height: fit-content;
+
+    font-size: 12px;
+    font-weight: 800;
+}
+
+
+/* =========================
+   MAIN
+   ========================= */
+
+.main {
+    display: flex;
+    flex-direction: column;
+
+    width: 35%;
+    height: auto;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 40px;
+    gap: 20px;
+
+    overflow: hidden;
+}
+
+
+/* =========================
+   PROJECTS
+   ========================= */
+
+.projects {
+    width: 100%;
+    height: auto;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+}
+
+
+/* =========================
+   PROJECT TEMPLATE
+   ========================= */
+
+.template_container {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    height: auto;
+
+    border: 1px solid rgba(33, 42, 56, 0.25);
+    border-radius: 10px;
+
+    align-items: flex-start;
+
+    gap: 20px;
+    padding: 20px;
+
+    overflow: hidden;
+}
+
+
+/* =========================
+   PROJECT TEXT
+   ========================= */
+
+.auto {
+    width: auto;
+    height: auto;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 2px;
+}
+
+.title_element {
+    width: fit-content;
+    height: fit-content;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    text-align: left;
+}
+
+.description_element {
+    width: fit-content;
+    height: fit-content;
+
+    font-size: 13px;
+    font-weight: 500;
+
+    text-align: left;
+}
+
+
+/* =========================
+   MEDIA
+   ========================= */
+
+.media_container {
+    width: 100%;
+
+    /*
+       Normal preview shape.
+       This is what the media looks like
+       before hovering.
+    */
+    aspect-ratio: 16 / 7;
+
+    overflow: hidden;
+
+    border-radius: 5px;
+
+    /*
+       The JavaScript sets --media-ratio
+       to the real image/video ratio.
+    */
+    transition: aspect-ratio 0.5s ease;
+}
+
+
+/*
+   Expand to the real aspect ratio
+   when hovering.
+*/
+.media_container:hover {
+    aspect-ratio: var(--media-ratio);
+}
+
+
+.media_element {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    transition: transform 0.5s ease;
+}
+
+
+/*
+   Tiny zoom when hovering.
+*/
+.media_container:hover .media_element {
+    transform: scale(1.02);
+}
+
+
+/* =========================
+   SOCIAL / ABOUT CONTAINER
+   ========================= */
+
+.about_container {
+    width: 100%;
+    height: 40px;
+
+    background-color: #212A38;
+
+    border-radius: 5px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+}
+
+
+.about_container_content {
+    display: flex;
+
+    gap: 15px;
+}
+
+
+.logo {
+    width: 18px;
+    height: 18px;
+}
+
+
+.logo_container {
+    height: auto;
+    width: auto;
+}
+
+
+/* =========================
+   BODY
+   ========================= */
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    margin: 0;
+}
