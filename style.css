@@ -149,21 +149,12 @@
 .media_container {
     width: 100%;
 
-    /*
-       Normal preview shape.
-       This is what the media looks like
-       before hovering.
-    */
     aspect-ratio: 16 / 7;
 
     overflow: hidden;
 
     border-radius: 5px;
 
-    /*
-       The JavaScript sets --media-ratio
-       to the real image/video ratio.
-    */
     transition: aspect-ratio 0.5s ease;
 }
 
@@ -190,7 +181,7 @@
 
 
 /*
-   Tiny zoom when hovering.
+   Zoom
 */
 .media_container:hover .media_element {
     transform: scale(1.02);

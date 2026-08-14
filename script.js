@@ -1,88 +1,144 @@
-const projects = [
-    {
-        title: "Windhill",
-        description: "Game development and visual design.",
-        type: "image",
-        media: "Assets/Placeholder.png"
-    },
-
-    {
-        title: "Communications Tool",
-        description: "UI and scripting.",
-        type: "video",
-        media: "Assets/Placeholder01.mp4"
-    }
-];
-
-
 const template = document.querySelector("#project-template");
 const container = document.querySelector(".projects");
 
+// Settings Ok?
+const GITHUB_USERNAME = "Wraithina";
+const GITHUB_REPOSITORY = "wraithina.github.io";
 
-projects.forEach(project => {
-
-    const clone = template.content.cloneNode(true);
-
-    // Set text
-    clone.querySelector(".title_element").textContent = project.title;
-    clone.querySelector(".description_element").textContent = project.description;
-
-    // Find media container
-    const mediaContainer = clone.querySelector(".media_container");
+const PROJECTS_FOLDER = "Projects";
 
 
-    // IMAGE
-    if (project.type === "image") {
+async function loadProjects() {
 
-        const image = document.createElement("img");
+    // Get all folders inside Projects/
+    const response = await fetch(
+        `https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPOSITORY}/contents/${PROJECTS_FOLDER}`
+    );
 
-        image.src = project.media;
-        image.alt = project.title;
-        image.className = "media_element";
-
-        // Get the image's real aspect ratio
-        image.onload = () => {
-
-            const ratio = image.naturalWidth / image.naturalHeight;
-
-            mediaContainer.style.setProperty(
-                "--media-ratio",
-                ratio
-            );
-
-        };
-
-        mediaContainer.appendChild(image);
+    if (!response.ok) {
+        console.error("Couldn't find the Projects folder.");
+        return;
     }
 
+    const folders = await response.json();
 
-    // VIDEO
-    if (project.type === "video") {
 
-        const video = document.createElement("video");
+    // Go through every project folder
+    for (const folder of folders) {
 
-        video.src = project.media;
-        video.className = "media_element";
+        if (folder.type !== "dir") {
+            continue;
+        }
 
-        video.controls = true;
+        if (folder.name === "Template") {
+            continue;
+        }
 
-        // Get the video's real aspect ratio
-        video.addEventListener("loadedmetadata", () => {
 
-            const ratio = video.videoWidth / video.videoHeight;
+        // Find project.json inside the folder
+        const projectResponse = await fetch(
+            `https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPOSITORY}/contents/${PROJECTS_FOLDER}/${folder.name}/project.json`
+        );
 
-            mediaContainer.style.setProperty(
-                "--media-ratio",
-                ratio
-            );
+        if (!projectResponse.ok) {
+            console.warn(`No project.json found for ${folder.name}`);
+            continue;
+        }
 
-        });
 
-        mediaContainer.appendChild(video);
+        // GitHub gives the JSON as Base64
+        const projectFile = await projectResponse.json();
+
+        const jsonText = atob(projectFile.content);
+
+        const project = JSON.parse(jsonText);
+
+
+        // Clone template
+        const clone = template.content.cloneNode(true);
+
+
+        // Set title and description
+        clone.querySelector(".title_element").textContent = project.title;
+
+        clone.querySelector(".description_element").textContent =
+            project.description;
+
+
+        // Find media container
+        const mediaContainer =
+            clone.querySelector(".media_container");
+
+
+        // Create media path
+        const mediaPath =
+            `${PROJECTS_FOLDER}/${folder.name}/${project.media}`;
+
+
+        // IMAGE
+        if (project.type === "image") {
+
+            const image = document.createElement("img");
+
+            image.src =
+                `https://raw.githubusercontent.com/${GITHUB_USERNAME}/${GITHUB_REPOSITORY}/main/${mediaPath}`;
+
+            image.alt = project.title;
+
+            image.className = "media_element";
+
+
+            // Get natural image aspect ratio
+            image.onload = () => {
+
+                const ratio =
+                    image.naturalWidth / image.naturalHeight;
+
+                mediaContainer.style.setProperty(
+                    "--media-ratio",
+                    ratio
+                );
+            };
+
+
+            mediaContainer.appendChild(image);
+        }
+
+
+        // VIDEO
+        if (project.type === "video") {
+
+            const video = document.createElement("video");
+
+            video.src =
+                `https://raw.githubusercontent.com/${GITHUB_USERNAME}/${GITHUB_REPOSITORY}/main/${mediaPath}`;
+
+            video.className = "media_element";
+
+            video.controls = true;
+
+
+            // Get natural video aspect ratio
+            video.addEventListener("loadedmetadata", () => {
+
+                const ratio =
+                    video.videoWidth / video.videoHeight;
+
+                mediaContainer.style.setProperty(
+                    "--media-ratio",
+                    ratio
+                );
+            });
+
+
+            mediaContainer.appendChild(video);
+        }
+
+
+        // Put project onto page
+        container.appendChild(clone);
     }
+}
 
 
-    // Add the finished project to the page
-    container.appendChild(clone);
-
-});
+loadProjects();
