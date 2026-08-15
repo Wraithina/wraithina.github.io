@@ -10,7 +10,6 @@ const PROJECTS_FOLDER = "Projects";
 
 async function loadProjects() {
 
-    // Get all folders inside Projects/
     const response = await fetch(
         `https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPOSITORY}/contents/${PROJECTS_FOLDER}`
     );
@@ -22,8 +21,10 @@ async function loadProjects() {
 
     const folders = await response.json();
 
+    const projects = [];
 
-    // Go through every project folder
+
+    // Get project data
     for (const folder of folders) {
 
         if (folder.type !== "dir") {
@@ -35,7 +36,6 @@ async function loadProjects() {
         }
 
 
-        // Find project.json inside the folder
         const projectResponse = await fetch(
             `https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPOSITORY}/contents/${PROJECTS_FOLDER}/${folder.name}/project.json`
         );
@@ -46,7 +46,6 @@ async function loadProjects() {
         }
 
 
-        // GitHub gives the JSON as Base64
         const projectFile = await projectResponse.json();
 
         const jsonText = atob(projectFile.content);
@@ -54,25 +53,36 @@ async function loadProjects() {
         const project = JSON.parse(jsonText);
 
 
-        // Clone template
+        // Remember the folder name
+        project.folder = folder.name;
+
+        projects.push(project);
+    }
+
+
+    // Sort projects by order
+    projects.sort((a, b) => a.order - b.order);
+
+
+    // Create the project cards
+    for (const project of projects) {
+
         const clone = template.content.cloneNode(true);
 
 
-        // Set title and description
-        clone.querySelector(".title_element").textContent = project.title;
+        clone.querySelector(".title_element").textContent =
+            project.title;
 
         clone.querySelector(".description_element").textContent =
             project.description;
 
 
-        // Find media container
         const mediaContainer =
             clone.querySelector(".media_container");
 
 
-        // Create media path
         const mediaPath =
-            `${PROJECTS_FOLDER}/${folder.name}/${project.media}`;
+            `${PROJECTS_FOLDER}/${project.folder}/${project.media}`;
 
 
         // IMAGE
@@ -88,7 +98,6 @@ async function loadProjects() {
             image.className = "media_element";
 
 
-            // Get natural image aspect ratio
             image.onload = () => {
 
                 const ratio =
@@ -118,7 +127,6 @@ async function loadProjects() {
             video.controls = true;
 
 
-            // Get natural video aspect ratio
             video.addEventListener("loadedmetadata", () => {
 
                 const ratio =
@@ -135,7 +143,6 @@ async function loadProjects() {
         }
 
 
-        // Put project onto page
         container.appendChild(clone);
     }
 }
