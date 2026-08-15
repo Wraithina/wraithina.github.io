@@ -68,13 +68,19 @@ async function loadProjects() {
     for (const project of projects) {
 
         const clone = template.content.cloneNode(true);
+        
+        
+        clone.querySelector(".title_element").innerHTML =
+        project.title.replace(
+             /\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g,
+             '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>'
+            );
 
-
-        clone.querySelector(".title_element").textContent =
-            project.title;
-
-        clone.querySelector(".description_element").textContent =
-            project.description;
+        clone.querySelector(".description_element").innerHTML =
+        project.description.replace(
+            /\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g,
+            '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>'
+        );
 
 
         const mediaContainer =
