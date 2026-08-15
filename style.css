@@ -237,3 +237,9 @@ body {
 
     margin: 0;
 }
+
+@media (max-width: 1264px) {
+    .main {
+        width: 100%;
+    }
+}
