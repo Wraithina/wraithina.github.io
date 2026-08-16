@@ -1,0 +1,7 @@
+{
+    "title": "Placeable Loader (Sangria)",
+    "description": "A placeable loader for Sangria Alsace. The project was abandoned shortly after this, so I didn't get to polish it, therefore it does contains a few bugs. Although it does work as intended and works with the building system shown above/below.",
+    "type": "video",
+    "media": "preview.mp4",
+    "order": 3
+}

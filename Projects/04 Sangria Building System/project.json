@@ -1,0 +1,7 @@
+{
+    "title": "Building System (Sangria)",
+    "description": "A building system for Sangria Alsace. This was my first attempt at making a building system, which didn't turn out very well. Some of the functions I made aren't very optimized and are very buggy. I find the sign and painting edit features really useful to use, though.",
+    "type": "video",
+    "media": "preview.mp4",
+    "order": 4
+}
