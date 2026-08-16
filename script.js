@@ -61,7 +61,7 @@ async function loadProjects() {
 
 
     // Sort projects by order
-    projects.sort((a, b) => a.order - b.order);
+    projects.sort((a, b) => b.order - a.order);
 
 
     // Create the project cards
